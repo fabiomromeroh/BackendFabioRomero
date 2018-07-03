@@ -8,6 +8,6 @@ namespace Business.Contracts
     public interface IClientLogic : IBaseLogic<Client>
     {
         Client GetById(string clientId);
-        Client GetByName(string name);
+        List<Client> GetByName(string name);
     }
 }

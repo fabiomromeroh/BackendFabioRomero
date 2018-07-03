@@ -25,12 +25,12 @@ namespace Services.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin,user")]
-        [Route("api/Client/GetById/{clientId}")]
-        public IHttpActionResult GetById(string clientId)
+        [Route("api/clients/{id}")]
+        public IHttpActionResult GetById(string id)
         {
             return GetHttpResponse(() =>
             {
-                var client = this.clientLogic.GetById(clientId);
+                var client = this.clientLogic.GetById(id);
                 var clientVm = ControllerProfile.Mapper.Map<Client, ClientModel>(client);
 
                 return Ok(client);
@@ -39,7 +39,7 @@ namespace Services.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin,user")]
-        [Route("api/Client/GetAll")]
+        [Route("api/clients")]
         public IHttpActionResult GetAll()
         {
             return GetHttpResponse(() =>
@@ -52,27 +52,27 @@ namespace Services.Controllers
         }
 
         [HttpGet]
-        [Route("api/Client/GetByName/{name}")]
+        [Route("api/clients/byname/{name}")]
         [Authorize(Roles ="admin,user")]
         public IHttpActionResult GetByName(string name)
         {
             return GetHttpResponse(() =>
             {
                 var client = this.clientLogic.GetByName(name);
-                var clientVm = ControllerProfile.Mapper.Map<Client, ClientModel>(client);
+                var clientVm = ControllerProfile.Mapper.Map<List<Client>, List<ClientModel>>(client);
 
-                return Ok(client);
+                return Ok(clientVm);
             });
         }
 
         [HttpGet]
-        [Route("api/Client/GetByPolicy/{policyId}")]
+        [Route("api/clients/bypolicy/{id}")]
         [Authorize(Roles = "admin")]
-        public IHttpActionResult GetByPolicy(string policyId)
+        public IHttpActionResult GetByPolicy(string id)
         {
             return GetHttpResponse(() =>
             {
-                var client = this.policyLogic.GetClientByPolicy(policyId);
+                var client = this.policyLogic.GetClientByPolicy(id);
 
                 var clientVm = ControllerProfile.Mapper.Map<Client, ClientModel>(client);
 

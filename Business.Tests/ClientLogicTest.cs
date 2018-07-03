@@ -6,6 +6,8 @@ using Data.Contracts;
 using Moq;
 using Entities;
 using Business.Implementations;
+using Data.Base;
+using Entities.Dto;
 
 namespace Business.Tests
 {
@@ -15,85 +17,30 @@ namespace Business.Tests
     [TestClass]
     public class ClientLogicTest
     {
-        public ClientLogicTest()
+        private ClientLogic Target { get; set; }
+
+        private IClientRepository clientRepository;
+        [TestInitialize]
+        public void OnInit()
         {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
 
-        private TestContext testContextInstance;
+            this.clientRepository = Mock.Of<IClientRepository>();
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
-        [TestMethod]
-        public void GetClientById_WithAValidId_ReturnClient()
-        {
-            //Arrange
-            var clientRepository = new Mock<IClientRepository>();
-
-            //Act
-            clientRepository.Setup(x => x.GetById(It.IsAny<string>()))
-                .Returns(() => new Client());
-            var clientLogic = new ClientLogic(clientRepository.Object);
-            clientLogic.GetById(It.IsAny<string>());
-
-
-            //Assert
-            clientRepository.Verify(x => x.GetById(It.IsAny<string>()));
+            this.Target = new ClientLogic(this.clientRepository);
         }
 
         [TestMethod]
-        public void GetClientById_ReturnNull()
+        public void Solicita_Al_ClientRepository_que_ejecute_GetById()
         {
             //Arrange
-            var clientRepository = new Mock<IClientRepository>();
 
             //Act
-            clientRepository.Setup(x => x.GetById(It.IsAny<string>()))
-                .Returns(() => null);
-            var clientLogic = new ClientLogic(clientRepository.Object);
-            clientLogic.GetById("a0ece5db-cd14-4f21-812f-966633e7be86");
-
+            this.Target.GetById(It.IsAny<string>());
 
             //Assert
-            clientRepository.Verify(x => x.GetById(It.IsAny<string>()));
+            Mock.Get(this.clientRepository).Verify(x => x.GetById(It.IsAny<string>()), Times.Once());
         }
+
+
     }
 }

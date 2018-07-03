@@ -23,7 +23,7 @@ namespace Services.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("api/User/Login")]
+        [Route("api/users/login")]
         public IHttpActionResult Login(UserModel userModel)
         {
             return GetHttpResponse(() =>

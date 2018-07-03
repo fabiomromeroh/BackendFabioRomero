@@ -21,7 +21,7 @@ namespace Services.Controllers
         }
 
         [HttpGet]
-        [Route("api/Policy/GetByClient/{name}")]
+        [Route("api/policies/byclient/{name}")]
         [Authorize(Roles = "admin")]
         public IHttpActionResult GetByClient(string name)
         {
@@ -36,8 +36,8 @@ namespace Services.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,user")]
-        [Route("api/Policy/GetAll")]
+        [Authorize(Roles = "admin")]
+        [Route("api/policies")]
         public IHttpActionResult GetAll()
         {
             return GetHttpResponse(() =>

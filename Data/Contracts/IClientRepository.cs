@@ -9,6 +9,6 @@ namespace Data.Contracts
     public interface IClientRepository : IBaseRepository<Client>
     {
         Client GetById(string clientId);
-        Client GetByName(string name);
+        List<Client> GetByName(string name);
     }
 }

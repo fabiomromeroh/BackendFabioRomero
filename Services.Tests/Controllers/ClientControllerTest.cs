@@ -15,29 +15,45 @@ namespace Services.Tests.Controllers
     [TestClass]
     public class ClientControllerTest
     {
-        public ClientControllerTest()
+        private ClientController Target { get; set; }
+
+        private IClientLogic clientLogic { get; set; }
+        private IPolicyLogic policyLogic { get; set; }
+
+        [TestInitialize]
+        public void OnInit()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+
+            //this.clientLogic = Mock.Of<IClientLogic>();
+            //this.policyLogic = Mock.Of<IPolicyLogic>();
+
+
+            //this.Target = new ClientController(this.clientLogic, this.policyLogic);
         }
 
 
         [TestMethod]
-        public void GetClientById()
+        public void Solicita_al_clientLogic_la_ejecucion_de_GetById()
         {
             //Arrange
-            var clientLogic = new Mock<IClientLogic>();
-            var policyLogic = new Mock<IPolicyLogic>();
 
-            clientLogic.Setup(x => x.GetById(It.IsAny<string>()))
-                .Returns(() => new Client());
-
-            var controller = new ClientController(clientLogic.Object, policyLogic.Object);
             //Act
-            controller.GetById("a0ece5db-cd14-4f21-812f-966633e7be");
-            //Assert
-            clientLogic.Verify(x=>x.GetById("a0ece5db-cd14-4f21-812f-966633e7be"));
+            //this.Target.GetById(It.IsAny<string>());
+
+            ////Assert
+            //Mock.Get(this.clientLogic).Verify(x => x.GetById(It.IsAny<string>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void Solicita_al_clientLogic_la_ejecucion_de_GetByName()
+        {
+            //Arrange
+
+            //Act
+            //this.Target.GetByName(It.IsAny<string>());
+
+            ////Assert
+            //Mock.Get(this.clientLogic).Verify(x => x.GetByName(It.IsAny<string>()), Times.Once());
         }
     }
 }

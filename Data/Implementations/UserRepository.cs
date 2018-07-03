@@ -11,6 +11,10 @@ namespace Data.Implementations
 {
     public class UserRepository : BaseRepository<Client>, IUserRepository
     {
+        public UserRepository(IContext context) : base(context)
+        {
+
+        }
 
         public Client Login(string email)
         {

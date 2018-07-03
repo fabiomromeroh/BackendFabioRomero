@@ -9,9 +9,6 @@ namespace Data
     public interface IBaseRepository<T>
         where T : class, new()
     {
-         IContext Context { get; }
-        IContext LoadContext();
-
         T Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void Remove(T entity);

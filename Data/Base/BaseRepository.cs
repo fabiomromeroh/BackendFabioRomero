@@ -1,10 +1,7 @@
 ﻿using Data.Base;
-using Entities.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Net;
-using System.Web.Script.Serialization;
 
 namespace Data
 {
@@ -12,84 +9,58 @@ namespace Data
         where T : class, new()
     {
 
-        private IContext _context;
+        protected IContext Context { get; set; }
 
-        public IContext Context
+
+        public BaseRepository(IContext context)
         {
-            get {
-                if(this._context == null)
-                    this._context = this.LoadContext();
-                return this._context;
-            }
-        }
-
-
-        public BaseRepository()
-        {
-            
-        }
-
-        public IContext LoadContext()
-        {
-            var context = new Context();
-
-            using (WebClient wc = new WebClient())
-            {
-                var json = wc.DownloadString("http://www.mocky.io/v2/580891a4100000e8242b75c5");
-
-                context.PolicyResult = new JavaScriptSerializer().Deserialize<PolicyResultDto>(json);
-
-                var clientJS = wc.DownloadString("http://www.mocky.io/v2/5808862710000087232b75ac");
-
-                context.ClientResult = new JavaScriptSerializer().Deserialize<ClientResultDto>(clientJS);
-            }
-            return context;
+            this.Context = context;
         }
 
 
         public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual void Remove(T entity)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual void RemoveById(int id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual T Update(T entity)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual void AddRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual void RemoveRange(IEnumerable<T> entities)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual T Get(int id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
 
         public virtual T Add(T entity)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // TODO: completar comportamiento cuando se implemente el ORM
         }
     }
 }

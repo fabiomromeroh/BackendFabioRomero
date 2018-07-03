@@ -1,16 +1,17 @@
-﻿using Data.Contracts;
+﻿using Data.Base;
+using Data.Contracts;
 using Entities;
-using Entities.Dto;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
 
 namespace Data.Implementations
 {
     public class PolicyRepository : BaseRepository<Policy>, IPolicyRepository
     {
+        public PolicyRepository(IContext context) : base(context)
+        {
+
+        }
 
         public List<Policy> GetByClientId(string clientId)
         {
@@ -20,8 +21,9 @@ namespace Data.Implementations
         public List<Policy> GetByClientName(string name)
         {
             var client = Context.ClientResult.clients.FirstOrDefault(x => x.name == name);
+            var clientId = client != null ? client.id : null;
 
-            return Context.PolicyResult.policies.Where(x => x.clientId == client.id).ToList();
+            return Context.PolicyResult.policies.Where(x => x.clientId == clientId).ToList();
         }
 
         public Client GetClientByPolicy(string policyId)
@@ -29,7 +31,7 @@ namespace Data.Implementations
             var client = Context.PolicyResult.policies.FirstOrDefault(x => x.id == policyId);
 
             var clientId = client != null ? client.clientId : null;
-            
+
             return Context.ClientResult.clients.FirstOrDefault(x => x.id == clientId);
         }
 

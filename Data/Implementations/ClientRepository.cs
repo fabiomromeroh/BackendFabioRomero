@@ -1,4 +1,5 @@
-﻿using Data.Contracts;
+﻿using Data.Base;
+using Data.Contracts;
 using Entities;
 using Entities.Dto;
 using Newtonsoft.Json;
@@ -15,15 +16,19 @@ namespace Data.Implementations
 {
     public class ClientRepository : BaseRepository<Client>, IClientRepository
     {
+        public ClientRepository(IContext context) : base(context)
+        {
+
+        }
 
         public Client GetById(string clientId)
         {
             return base.Context.ClientResult.clients.Where(x => x.id == clientId).FirstOrDefault();
         }
 
-        public Client GetByName(string name)
+        public List<Client> GetByName(string name)
         {
-            return base.Context.ClientResult.clients.Where(x => x.name == name).FirstOrDefault();
+            return base.Context.ClientResult.clients.Where(x => x.name.Contains(name)).ToList();
         }
 
         public override IEnumerable<Client> GetAll()

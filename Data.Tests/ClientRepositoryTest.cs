@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using Data.Base;
 using Data.Implementations;
 using Entities;
+using Entities.Dto;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -9,15 +12,28 @@ namespace Data.Tests
     [TestClass]
     public class ClientRepositoryTest
     {
+        private ClientRepository Target { get; set; }
+        private IContext context;
+        [TestInitialize]
+        public void OnInit()
+        {
+            var clients = new List<Client>
+            {
+                Mock.Of<Client>(c => c.id == "1" && c.name == "Fabio")
+            };
+            this.context = Mock.Of<IContext>(c => c.ClientResult == Mock.Of<ClientResultDto>(cr => cr.clients == clients));
+            this.Target = new ClientRepository(this.context);
+        }
+
         [TestMethod]
         public void GetClientByID_ReturnNull()
         {
             //Arrange
-            var clientRepository = new Implementations.ClientRepository();
 
             //Act
-            var client = clientRepository.GetById(It.IsAny<string>());
+            var client = this.Target.GetById("2");
 
+            //Assert
             Assert.AreEqual(null, client);
         }
 
@@ -25,12 +41,12 @@ namespace Data.Tests
         public void GetClientByID_ReturnClient()
         {
             //Arrange
-            var clientRepository = new Implementations.ClientRepository();
 
             //Act
-            var client = clientRepository.GetById("a0ece5db-cd14-4f21-812f-966633e7be86");
+            var client = this.Target.GetById("1");
 
-            Assert.AreEqual("a0ece5db-cd14-4f21-812f-966633e7be86", client.id);
+            //Assert
+            Assert.AreEqual("1", client.id);
         }
     }
 }

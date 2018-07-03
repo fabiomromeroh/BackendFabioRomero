@@ -26,7 +26,7 @@ namespace Services.Security
             string role = context.OwinContext.Get<string>("Role");
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim("email", context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            identity.AddClaim(new Claim(ClaimTypes.Role, role)); //Guardamos el rol del usuario.
             context.Validated(identity);
         }
     }

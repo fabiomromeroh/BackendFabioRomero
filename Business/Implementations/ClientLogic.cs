@@ -22,7 +22,7 @@ namespace Business.Implementations
             return this.clientRepository.GetById(clientId);
         }
 
-        public Client GetByName(string name)
+        public List<Client> GetByName(string name)
         {
             return this.clientRepository.GetByName(name);
         }
